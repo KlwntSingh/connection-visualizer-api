@@ -30,6 +30,6 @@ function dot2num(dot)
     return ((((((+d[0])*256)+(+d[1]))*256)+(+d[2]))*256)+(+d[3]);
 }
 
-app.listen(3000);
+app.listen(80);
 console.log("Server started")
 
