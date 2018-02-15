@@ -1,22 +1,21 @@
 var express = require('express');
 var app = express();
 var mysql = require('mysql');
+var config = require('./config.json')
 
-var pool = mysql.createPool({
-  connectionLimit : 10,
-  host: "",
-  user: "",
-  password: "",
-  database : ""
-});
+var pool = mysql.createPool(config);
 
 app.get('/info/:ip', function(req, res){
 	var ip = dot2num(req.params.ip)
 	pool.getConnection(function(err, connection) {
+	    if(err){
+	        console.log(err)
+	        return res.status(500).send(err)
+	    }
 		connection.query("SELECT * FROM ip_info where start_ip_number <= ? and end_ip_number >= ?", [ip, ip], function(err, rs){
 			if(err){
 				console.log(err)
-				return res.send(err)
+				return res.status(500).send(err)
 			}else{
 				res.send(rs[0])
 			}
