@@ -13,6 +13,7 @@ app.get('/info/:ip', function(req, res){
 	        return res.status(500).send(err)
 	    }
 		connection.query("SELECT * FROM ip_info where start_ip_number <= ? and end_ip_number >= ?", [ip, ip], function(err, rs){
+		    connection.release()
 			if(err){
 				console.log(err)
 				return res.status(500).send(err)
